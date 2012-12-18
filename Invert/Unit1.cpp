@@ -79,10 +79,7 @@ if (OpenDialog1->Execute()){
 			{
 			/*if (dv == ".") {
 			dv = ",";
-			} я тут типа добавил ещё комментов
-			new comment
-			new new comment
-			new new new comment*/
+			} */
 			if (dv != ";")
 			{
 			od+=dv;
