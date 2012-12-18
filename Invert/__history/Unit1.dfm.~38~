@@ -17,9 +17,16 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 201
     Top = 406
-    Width = 41
+    Width = 38
     Height = 13
     Caption = #1055#1077#1088#1080#1086#1076
+  end
+  object Label2: TLabel
+    Left = 223
+    Top = 433
+    Width = 16
+    Height = 13
+    Caption = 'k ='
   end
   object StringGrid1: TStringGrid
     Left = 8
@@ -54,14 +61,15 @@ object Form1: TForm1
     Top = 8
     Width = 353
     Height = 361
+    ColCount = 4
     FixedCols = 0
+    RowCount = 11
     TabOrder = 3
     ColWidths = (
-      64
-      64
-      125
-      64
-      64)
+      48
+      98
+      98
+      102)
   end
   object Edit1: TEdit
     Left = 256
@@ -73,11 +81,20 @@ object Form1: TForm1
   end
   object Edit2: TEdit
     Left = 256
-    Top = 440
+    Top = 430
     Width = 41
     Height = 21
     TabOrder = 5
     Text = '180'
+  end
+  object Button3: TButton
+    Left = 360
+    Top = 375
+    Width = 137
+    Height = 25
+    Caption = #1055#1086#1089#1090#1088#1086#1080#1090#1100' '#1084#1086#1076#1091#1083#1080' '#1040#1063#1061
+    TabOrder = 6
+    OnClick = Button3Click
   end
   object OpenDialog1: TOpenDialog
     Filter = 'CSV File|*.csv'
