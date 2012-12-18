@@ -80,9 +80,13 @@ if (OpenDialog1->Execute()){
 			/*if (dv == ".") {
 			dv = ",";
 			} я тут типа добавил ещё комментов
+<<<<<<< HEAD:Invert/__history/Unit1.cpp.~213~
 			new comment
 			new new comment
 			new new new comment*/
+=======
+			new comment*/
+>>>>>>> origin/iss-1:Invert/__history/Unit1.cpp.~213~
 			if (dv != ";")
 			{
 			od+=dv;
