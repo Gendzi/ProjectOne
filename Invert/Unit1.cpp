@@ -79,7 +79,7 @@ if (OpenDialog1->Execute()){
 			{
 			/*if (dv == ".") {
 			dv = ",";
-			} */
+			} 12345*/
 			if (dv != ";")
 			{
 			od+=dv;
