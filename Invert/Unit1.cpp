@@ -20,6 +20,8 @@
 
 using namespace std;
 
+void ClearStrGrig (TStringGrid *a);
+
 TForm1 *Form1;
 
 //---------------------------------------------------------------------------
@@ -32,81 +34,95 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::Open1Click(TObject *Sender)
 {
-if (OpenDialog1->Execute()){
-	ifstream in(OpenDialog1->FileName.c_str());
-	if (!in.is_open())
+	vecRawData.clear();
+    vecNameCol.clear();
+	if (OpenDialog1->Execute())
 	{
-	MessageBox(Application->Handle, "Не удалось открыть файл", "Error", MB_OK );
-	return;
-	}
-	float F[4] = {0,0,0,0};
-	string s;
-	String od, dv;
-	int j = 0;
-	if (getline<>(in, s, '\n'))
-	{
-	int i = 0;
+		ifstream in(OpenDialog1->FileName.c_str());
+		if (!in.is_open())
 		{
-		AnsiString temp = s.c_str();
-		for (int z = 1; z < temp.Length() + 1; z++) {
-			dv = temp.SubString(z, 1);
-			if (dv == " ") {}
-			else {
-			if (dv != ";")
-			{
-			od+=dv;
-			}
-			else
-			{
-			StringGrid1->Cells[i][0] = od;
-			od = "";
-			i++;
-			}
+			MessageBox(Application->Handle, "Не удалось открыть файл!", "Error", MB_OK );
+			return;
 		}
-		if (z == temp.Length()) {
-		StringGrid1->Cells[i][0] = od;
-			od = "";
-			i++;            
-		}
-		}
-		}
-		j++;
-	}
-	while (getline<>(in, s, '\n'))
+		string s;
+		String od, dv;
+		int counRow = 0;
+		if (getline<>(in, s, '\n'))
 		{
-		int wh = 0;
-		AnsiString temp = s.c_str();
-		for (int z = 1; z < temp.Length() + 1; z++) {
-			dv = temp.SubString(z, 1);
-			if (dv == " ") {}
-			else
+			AnsiString temp = s.c_str();
+			for (int i = 1; i < temp.Length() + 1; i++)
 			{
-			/*if (dv == ".") {
-			dv = ",";
-			} 12345*/
-			if (dv != ";")
-			{
-			od+=dv;
-			}
-			else
-			{
-			F[wh] = StrToFloat(od);
-			od = "";
-			wh++;
-			}
+				dv = temp.SubString(i, 1);
+				if (dv == " ")
+				{
+				}
+				else
+				{
+					if (dv != ";")
+					{
+						od+=dv;
+					}
+					else
+					{
+						vecNameCol.push_back(od);
+						od = "";
+					}
+				}
+				if (i == temp.Length())
+				{
+					vecNameCol.push_back(od);
+					od = "";
+				}
 			}
 		}
-		for (int i = 0; i < 4; i++) {
-			StringGrid1->Cells[i][j] = FormatFloat("0.###", F[i]);
+		while (getline<>(in, s, '\n'))
+		{
+			std::vector< double > tempVec;
+			AnsiString tempStr = s.c_str();
+			for (int i = 1; i < tempStr.Length() + 1; i++)
+			{
+				dv = tempStr.SubString(i, 1);
+				if (dv == " ")
+				{
+				}
+				else
+				{
+					if (dv == ",")
+					{
+						dv = ".";
+					}
+					if (dv != ";")
+					{
+						od+=dv;
+					}
+					else
+					{
+						tempVec.push_back(StrToFloat(od));
+						od = "";
+					}
+				}
+			}
+			vecRawData.push_back(tempVec);
+			counRow++;
 		}
-		j++;
-		StringGrid1->RowCount=j;
-		}
-
-	in.close();
+		in.close();
 	}
 	else
 	MessageBox(Application->Handle, "Файл для открытия не выбран!", "Error", MB_OK );
+
+// Вывод значений из массивов непосредственно в Гриды
+	ClearStrGrig(StringGrid1);
+	StringGrid1->RowCount = vecRawData.size();
+	StringGrid1->ColCount = vecRawData[1].size();
+	for (int i = 0; i < vecNameCol.size(); i++)
+	{
+		StringGrid1->Cells[i][0] = vecNameCol[i];
+	}
+	for (int i = 1; i < vecRawData.size(); i++)
+	{
+		for (int j = 0; j < vecRawData[1].size() ; j++)
+		StringGrid1->Cells[j][i] = FormatFloat("0.###", vecRawData[i][j]);
+	}
 }
 //---------------------------------------------------------------------------
 
@@ -134,8 +150,8 @@ float x = 0.0;
 int iNumberCol;
 iNumberCol = StrToInt(sChoseColum);
 	for (int j = 1; j < StringGrid1->RowCount; j++) {
-				x = StrToFloat(StringGrid1->Cells[iNumberCol-1][j]);
-				StringGrid1->Cells[iNumberCol-1][j] = FormatFloat("0.###", -x);
+		x = StrToFloat(StringGrid1->Cells[iNumberCol-1][j]);
+		StringGrid1->Cells[iNumberCol-1][j] = FormatFloat("0.###", -x);
 
 		}
 		}
@@ -148,11 +164,7 @@ iNumberCol = StrToInt(sChoseColum);
 
 void __fastcall TForm1::Clear1Click(TObject *Sender)
 {
-	for(int i = 0; i < StringGrid1->ColCount; i++)
-		for(int j = 0; j < StringGrid1->RowCount; j++)
-		StringGrid1->Cells[i][j] = "";
-        StringGrid1->RowCount = 2;
-
+	ClearStrGrig(StringGrid1);
 }
 //---------------------------------------------------------------------------
 
@@ -256,3 +268,11 @@ Form3->Show();
 }
 //---------------------------------------------------------------------------
 
+void ClearStrGrig (TStringGrid *a)
+{
+	for(int i = 0; i < a->ColCount; i++)
+		for(int j = 0; j < a->RowCount; j++)
+		a->Cells[i][j] = "";
+        a->ColCount = 4;
+		a->RowCount = 2;
+}
