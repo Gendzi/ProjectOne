@@ -17,25 +17,30 @@ __fastcall TForm2::TForm2(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm2::Button1Click(TObject *Sender)
 {
+if (Form1->vecNameCol.size()==1)
+{
+	Form1->sChoseColum = "1";
+	this->Close();
+}
 if (Edit1->Text=="") {
-	MessageBox(Application->Handle, "¬ведите корректное значение (1-4)",
-	"ќшибка", MB_OK );
+	MessageBox(Application->Handle, "¬ведите корректный номер столбца (1,2...)!" , "ќшибка", MB_OK );
 	}
 	else
 	{
-	if (Edit1->Text=="1"||Edit1->Text=="2"||Edit1->Text=="3"||Edit1->Text=="4")
+	int MaxNum;							//максимальный номер колонки
+	MaxNum = Form1->vecNameCol.size();
+	if ((1 <= StrToInt(Edit1->Text)) && (StrToInt(Edit1->Text) <= MaxNum) )
 	{
 		Form1->sChoseColum = Edit1->Text;
 		this->Close();
 	}
 	else
 	{
-	MessageBox(Application->Handle, "¬ведите корректное значение (1-4)",
+	MessageBox(Application->Handle, "¬ведите корректный номер столбца (1,2...)!",
 	"ќшибка", MB_OK );
 	Edit1->Text="";
 	}
 	}
-
-
 }
 //---------------------------------------------------------------------------
+

@@ -50,28 +50,54 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 		if (getline<>(in, s, '\n'))
 		{
 			AnsiString temp = s.c_str();
-			for (int i = 1; i < temp.Length() + 1; i++)
+			int x = temp.Length()-1;
+			if (temp[x]== ';')
 			{
-				dv = temp.SubString(i, 1);
-				if (dv == " ")
+				for (int i = 1; i < temp.Length() + 1; i++)
 				{
-				}
-				else
-				{
-					if (dv != ";")
+					dv = temp.SubString(i, 1);
+					if (dv == " ")
 					{
-						od+=dv;
 					}
 					else
 					{
-						vecNameCol.push_back(od);
-						od = "";
+						if (dv != ";")
+						{
+							od+=dv;
+						}
+						else
+						{
+							vecNameCol.push_back(od);
+							od = "";
+						}
 					}
 				}
-				if (i == temp.Length())
+			}
+			else
+			{
+				for (int i = 1; i < temp.Length() + 1; i++)
 				{
-					vecNameCol.push_back(od);
-					od = "";
+					dv = temp.SubString(i, 1);
+					if (dv == " ")
+					{
+					}
+					else
+					{
+						if (dv != ";")
+						{
+							od+=dv;
+						}
+						else
+						{
+							vecNameCol.push_back(od);
+							od = "";
+						}
+					}
+					if (i == temp.Length())
+					{
+                    	vecNameCol.push_back(od);
+						od = "";                         
+					}
 				}
 			}
 		}
@@ -112,16 +138,16 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 
 // Вывод значений из массивов непосредственно в Гриды
 	ClearStrGrig(StringGrid1);
-	StringGrid1->RowCount = vecRawData.size();
-	StringGrid1->ColCount = vecRawData[1].size();
+	StringGrid1->RowCount = vecRawData.size()+1;
+	StringGrid1->ColCount = vecNameCol.size();
 	for (int i = 0; i < vecNameCol.size(); i++)
 	{
 		StringGrid1->Cells[i][0] = vecNameCol[i];
 	}
-	for (int i = 1; i < vecRawData.size(); i++)
+	for (int i = 0; i < vecRawData.size(); i++)
 	{
-		for (int j = 0; j < vecRawData[1].size() ; j++)
-		StringGrid1->Cells[j][i] = FormatFloat("0.###", vecRawData[i][j]);
+		for (int j = 0; j < vecRawData[0].size() ; j++)
+		StringGrid1->Cells[j][i+1] = FormatFloat("0.###", vecRawData[i][j]);
 	}
 }
 //---------------------------------------------------------------------------
@@ -134,31 +160,31 @@ void __fastcall TForm1::Close1Click(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-sChoseColum = "";
-TForm2 *Form2 = new TForm2(NULL);
-Form2->Position = poScreenCenter;
-Form2->ShowModal();
-if (!(Form2->Active))
-{
-if (sChoseColum=="") {
-	delete Form2;
-	Form2 = NULL;
-}
-else
-{
-float x = 0.0;
-int iNumberCol;
-iNumberCol = StrToInt(sChoseColum);
-	for (int j = 1; j < StringGrid1->RowCount; j++) {
-		x = StrToFloat(StringGrid1->Cells[iNumberCol-1][j]);
-		StringGrid1->Cells[iNumberCol-1][j] = FormatFloat("0.###", -x);
-
+	sChoseColum = "";
+	TForm2 *Form2 = new TForm2(NULL);
+	Form2->Position = poScreenCenter;
+	Form2->ShowModal();
+		if (sChoseColum=="")
+		{
+			delete Form2;
+			Form2 = NULL;
 		}
+		else
+		{
+			double x = 0.0;
+			int iNumCol;
+			iNumCol = StrToInt(sChoseColum)-1;
+			vector < double > tempVec;
+			for (int j = 0; j < vecRawData.size() ; j++)
+			{
+				tempVec = vecRawData[j];
+				tempVec[iNumCol] = -tempVec[iNumCol];
+				vecRawData[j] = tempVec;
+				StringGrid1->Cells[iNumCol][j+1] = FormatFloat("0.###", vecRawData[j][iNumCol]);
+			}
 		}
 		delete Form2;
 		Form2 = NULL;
-	}
-
 }
 //---------------------------------------------------------------------------
 
@@ -198,7 +224,7 @@ void __fastcall TForm1::Help1Click(TObject *Sender)
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-intNullFuncFirst = 0;
+iNullFirst = 0;
 intNullFuncSecond = 0;
 float intNullFuncBuffPoz;
 float intNullFuncBuffNeg;
@@ -207,7 +233,7 @@ for (int i = 1; i < StringGrid1->RowCount; i++) {
 intNullFuncBuffPoz = StrToFloat(StringGrid1->Cells[0][i]);
 intNullFuncBuffNeg = StrToFloat(StringGrid1->Cells[0][i+1]);
 if (intNullFuncBuffPoz * intNullFuncBuffNeg < 0) {
-intNullFuncFirst = i+1;
+iNullFirst = i+1;
 if (intNullFuncBuffNeg < 0) {
 continue;
 }
@@ -215,7 +241,7 @@ break;
 }
 }
 
-for (int i = intNullFuncFirst+StrToInt(Edit1->Text); i < StringGrid1->RowCount; i++) {
+for (int i = iNullFirst+StrToInt(Edit1->Text); i < StringGrid1->RowCount; i++) {
 intNullFuncBuffPoz = StrToFloat(StringGrid1->Cells[0][i]);
 intNullFuncBuffNeg = StrToFloat(StringGrid1->Cells[0][i+1]);
 if (intNullFuncBuffPoz * intNullFuncBuffNeg < 0) {
@@ -224,22 +250,22 @@ break;
 }
 }
 float dSumSin = 0, dSumCos = 0;
-float dPeriod = intNullFuncSecond - intNullFuncFirst;
+float dPeriod = intNullFuncSecond - iNullFirst;
 StringGrid2->RowCount = StrToInt(Edit2->Text);
 for (int k = 1; k < StrToInt(Edit2->Text); k++) {
 	dSumSin = 0;
     dSumCos = 0;
-	for(int n = intNullFuncFirst; n < intNullFuncSecond; n++)
+	for(int n = iNullFirst; n < intNullFuncSecond; n++)
 	{
-		dSumSin += StrToFloat(StringGrid1->Cells[0][n]) * sin(2*M_PI*k*(n-intNullFuncFirst)/dPeriod);
-		dSumCos += StrToFloat(StringGrid1->Cells[0][n]) * cos(2*M_PI*k*(n-intNullFuncFirst)/dPeriod);
+		dSumSin += StrToFloat(StringGrid1->Cells[0][n]) * sin(2*M_PI*k*(n-iNullFirst)/dPeriod);
+		dSumCos += StrToFloat(StringGrid1->Cells[0][n]) * cos(2*M_PI*k*(n-iNullFirst)/dPeriod);
 	}
 	StringGrid2->Cells[0][k] = k;
 	StringGrid2->Cells[1][k] = FormatFloat("0.########", dSumSin*2/dPeriod);
 	StringGrid2->Cells[2][k] = FormatFloat("0.########", dSumCos*2/dPeriod);
 }
 double a0 = 0;
-for(int n = intNullFuncFirst; n < intNullFuncSecond; n++) {
+for(int n = iNullFirst; n < intNullFuncSecond; n++) {
 a0 += StrToFloat(StringGrid1->Cells[0][n]);
 }
 a0 = a0/dPeriod;

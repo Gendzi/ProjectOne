@@ -25,12 +25,12 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	Series3->AddXY(i, StrToFloat(Form1->StringGrid1->Cells[0][i]));
 	}
 	double dAmplituda = 0;
-	for (int j = Form1->intNullFuncFirst; j < Form1->intNullFuncSecond ; j++)
+	for (int j = Form1->iNullFirst; j < Form1->intNullFuncSecond ; j++)
 	{
 		dAmplituda = 0;
 		for (int k = 1; k < Form1->StringGrid2->RowCount ; k++)
 		{
-		dAmplituda += (StrToFloat(Form1->StringGrid2->Cells[2][k])*cos(2*M_PI*k*(j-Form1->intNullFuncFirst+1)/(Form1->intNullFuncSecond-Form1->intNullFuncFirst)) + StrToFloat(Form1->StringGrid2->Cells[1][k])*sin(2*M_PI*k*(j-Form1->intNullFuncFirst+1)/(Form1->intNullFuncSecond-Form1->intNullFuncFirst)));
+		dAmplituda += (StrToFloat(Form1->StringGrid2->Cells[2][k])*cos(2*M_PI*k*(j-Form1->iNullFirst+1)/(Form1->intNullFuncSecond-Form1->iNullFirst)) + StrToFloat(Form1->StringGrid2->Cells[1][k])*sin(2*M_PI*k*(j-Form1->iNullFirst+1)/(Form1->intNullFuncSecond-Form1->iNullFirst)));
 		}
 		dAmplituda += StrToFloat(Form1->StringGrid2->Cells[3][1]);
 		Series2->AddXY(j, dAmplituda);

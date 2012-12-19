@@ -1,9 +1,9 @@
 object Form2: TForm2
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = #1048#1085#1074#1077#1088#1090#1080#1088#1086#1074#1072#1085#1080#1077
   ClientHeight = 104
-  ClientWidth = 258
+  ClientWidth = 240
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,10 +16,10 @@ object Form2: TForm2
   object Label1: TLabel
     Left = 8
     Top = 8
-    Width = 241
+    Width = 225
     Height = 13
     Align = alCustom
-    Caption = #1042#1074#1077#1076#1080#1090#1077' '#1085#1086#1084#1077#1088' '#1089#1090#1086#1083#1073#1094#1072' '#1076#1083#1103' '#1080#1085#1074#1077#1088#1090#1072#1094#1080#1080' (1-4)'
+    Caption = #1042#1074#1077#1076#1080#1090#1077' '#1082#1086#1088#1088#1077#1082#1090#1085#1099#1081' '#1085#1086#1084#1077#1088' '#1089#1090#1086#1083#1073#1094#1072' (1,2...)'
   end
   object Edit1: TEdit
     Left = 64

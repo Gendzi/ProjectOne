@@ -47,7 +47,7 @@ public:		// User declarations
 std::vector< String > vecNameCol;
 std::vector< std::vector<double> > vecRawData;
 String sChoseColum;
-float intNullFuncFirst;
+float iNullFirst;
 float intNullFuncSecond;
 	__fastcall TForm1(TComponent* Owner);
 };
