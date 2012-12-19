@@ -10,6 +10,7 @@
 #include <Dialogs.hpp>
 #include <Grids.hpp>
 #include <Menus.hpp>
+#include <vector.h>
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -43,6 +44,8 @@ __published:	// IDE-managed Components
 	void __fastcall Button3Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
+std::vector< string > vecNameCol;
+std::vector< std::vector<double> > vecRawData;
 String sChoseColum;
 float intNullFuncFirst;
 float intNullFuncSecond;

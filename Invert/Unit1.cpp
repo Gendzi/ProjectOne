@@ -21,7 +21,7 @@
 using namespace std;
 
 TForm1 *Form1;
-std::vector< std::vector<double> > vecRawData;
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
@@ -34,11 +34,15 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 {
 if (OpenDialog1->Execute()){
 	ifstream in(OpenDialog1->FileName.c_str());
-	if (in.is_open()) {
+	if (!in.is_open())
+	{
+	MessageBox(Application->Handle, "Не удалось открыть файл", "Error", MB_OK );
+	return;
+	}
+	float F[4] = {0,0,0,0};
 	string s;
 	String od, dv;
 	int j = 0;
-	float F[4] = {0,0,0,0};
 	if (getline<>(in, s, '\n'))
 	{
 	int i = 0;
@@ -101,9 +105,8 @@ if (OpenDialog1->Execute()){
 
 	in.close();
 	}
-	}
 	else
-	MessageBox(Application->Handle, "Не удалось открыть файл", "Error", MB_OK );
+	MessageBox(Application->Handle, "Файл для открытия не выбран!", "Error", MB_OK );
 }
 //---------------------------------------------------------------------------
 
