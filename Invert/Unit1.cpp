@@ -50,8 +50,9 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 		if (getline<>(in, s, '\n'))
 		{
 			AnsiString temp = s.c_str();
-			int x = temp.Length()-1;
-			if (temp[x]== ';')
+			int x = temp.Length();
+			dv = temp.SubString(x, 1);
+			if (dv == ";")
 			{
 				for (int i = 1; i < temp.Length() + 1; i++)
 				{
@@ -196,23 +197,27 @@ void __fastcall TForm1::Clear1Click(TObject *Sender)
 
 void __fastcall TForm1::Save1Click(TObject *Sender)
 {
-if (SaveDialog1->Execute()) {
-ofstream out(SaveDialog1->FileName.c_str());
-if (out.is_open())
-{
-for(int j = 0; j < StringGrid1->ColCount; j++)
-{
-for(int i = 0; i < StringGrid1->RowCount; i++)
-{
-	out << (StringGrid1->Cells[i][j].c_str()) <<";";
-}
-out << endl;
-}
-out.close();
-}
-else
-MessageBox(Application->Handle, "Не удалось сохранить файл", "Error", MB_OK );
-}
+	if (SaveDialog1->Execute())
+	{
+		ofstream out(SaveDialog1->FileName.c_str());
+		if (out.is_open())
+			{
+				for(int i = 0; i < vecNameCol.size(); i++)
+					out << vecNameCol[i].c_str() << ";";
+                out << endl;
+				for(int j = 0; j < vecRawData.size(); j++)
+				{
+					for(int i = 0; i < vecRawData[0].size(); i++)
+					{
+						out << vecRawData[j][i] <<";";
+					}
+					out << endl;
+				}
+				out.close();
+			}
+		else
+			MessageBox(Application->Handle, "Не удалось сохранить файл", "Error", MB_OK );
+	}
 }
 //---------------------------------------------------------------------------
 
