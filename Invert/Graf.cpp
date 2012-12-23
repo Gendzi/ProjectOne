@@ -4,8 +4,8 @@
 #include <math.h>
 #pragma hdrstop
 
-#include "Unit3.h"
-#include "Unit1.h"
+#include "Graf.h"
+#include "Main.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "Chart"

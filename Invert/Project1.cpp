@@ -3,9 +3,10 @@
 #include <vcl.h>
 #pragma hdrstop
 //---------------------------------------------------------------------------
-USEFORM("Unit1.cpp", Form1);
-USEFORM("Unit2.cpp", Form2);
-USEFORM("Unit3.cpp", Form3);
+USEFORM("Main.cpp", Form1);
+USEFORM("Invert.cpp", Form2);
+USEFORM("Graf.cpp", Form3);
+USEFORM("ChoseForCoef.cpp", Form4);
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {

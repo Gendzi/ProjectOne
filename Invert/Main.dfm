@@ -44,6 +44,7 @@ object Form1: TForm1
     Width = 145
     Height = 25
     Caption = #1048#1085#1074#1077#1088#1090#1080#1088#1086#1074#1072#1090#1100' '#1079#1085#1072#1095#1077#1085#1080#1103
+    Enabled = False
     TabOrder = 1
     OnClick = Button1Click
   end
@@ -53,6 +54,7 @@ object Form1: TForm1
     Width = 152
     Height = 25
     Caption = #1055#1086#1083#1091#1095#1080#1090#1100' '#1082#1086#1101#1092#1092#1080#1094#1080#1077#1085#1090#1099
+    Enabled = False
     TabOrder = 2
     OnClick = Button2Click
   end
@@ -93,6 +95,7 @@ object Form1: TForm1
     Width = 137
     Height = 25
     Caption = #1055#1086#1089#1090#1088#1086#1080#1090#1100' '#1084#1086#1076#1091#1083#1080' '#1040#1063#1061
+    Enabled = False
     TabOrder = 6
     OnClick = Button3Click
   end

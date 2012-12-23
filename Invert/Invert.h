@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 
-#ifndef Unit2H
-#define Unit2H
+#ifndef InvertH
+#define InvertH
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>

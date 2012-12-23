@@ -9,9 +9,10 @@
 #include <vector>
 #pragma hdrstop
 
-#include "Unit1.h"
-#include "Unit2.h"
-#include "Unit3.h"
+#include "Main.h"
+#include "Invert.h"
+#include "Graf.h"
+#include "ChoseForCoef.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -35,8 +36,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::Open1Click(TObject *Sender)
 {
-	vecRawData.clear();
-    vecNameCol.clear();
 	if (OpenDialog1->Execute())
 	{
 		ifstream in(OpenDialog1->FileName.c_str());
@@ -45,6 +44,14 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 			MessageBox(Application->Handle, "Не удалось открыть файл!", "Error", MB_OK );
 			return;
 		}
+		//сброс старых параметров
+		vecRawData.clear();
+		vecNameCol.clear();
+		vecCoeff.clear();
+		Button1->Enabled = true;
+		Button2->Enabled = true;
+		Button3->Enabled = false;
+		
 		string s;
 		String od, dv;
 		int counRow = 0;
@@ -134,23 +141,22 @@ void __fastcall TForm1::Open1Click(TObject *Sender)
 			counRow++;
 		}
 		in.close();
+	// Вывод значений из массивов непосредственно в Гриды
+		ClearStrGrig(StringGrid1);
+		StringGrid1->RowCount = vecRawData.size()+1;
+		StringGrid1->ColCount = vecNameCol.size();
+		for (int i = 0; i < vecNameCol.size(); i++)
+		{
+			StringGrid1->Cells[i][0] = vecNameCol[i];
+		}
+		for (int i = 0; i < vecRawData.size(); i++)
+		{
+			for (int j = 0; j < vecRawData[0].size() ; j++)
+			StringGrid1->Cells[j][i+1] = FormatFloat("0.###", vecRawData[i][j]);
+		}
 	}
 	else
 	MessageBox(Application->Handle, "Файл для открытия не выбран!", "Error", MB_OK );
-
-// Вывод значений из массивов непосредственно в Гриды
-	ClearStrGrig(StringGrid1);
-	StringGrid1->RowCount = vecRawData.size()+1;
-	StringGrid1->ColCount = vecNameCol.size();
-	for (int i = 0; i < vecNameCol.size(); i++)
-	{
-		StringGrid1->Cells[i][0] = vecNameCol[i];
-	}
-	for (int i = 0; i < vecRawData.size(); i++)
-	{
-		for (int j = 0; j < vecRawData[0].size() ; j++)
-		StringGrid1->Cells[j][i+1] = FormatFloat("0.###", vecRawData[i][j]);
-	}
 }
 //---------------------------------------------------------------------------
 
@@ -193,6 +199,11 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 void __fastcall TForm1::Clear1Click(TObject *Sender)
 {
 	ClearStrGrig(StringGrid1);
+	ClearStrGrig(StringGrid2);
+	Button1->Enabled = false;
+	Button2->Enabled = false;
+	Button3->Enabled = false;
+	
 }
 //---------------------------------------------------------------------------
 
@@ -231,11 +242,14 @@ void __fastcall TForm1::Help1Click(TObject *Sender)
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-	ClearStrGrig(StringGrid2);
-	iNumCol = 0;
+	Button3->Enabled = true;
 	iNullFirst = 0;
 	iNullSecond = 0;
-	int arr[4][250];
+	TForm4 *Form4 = new TForm4(NULL);
+	Form4->Position = poScreenCenter;
+	Form4->ShowModal();
+    vecCoeff.clear();
+	ClearStrGrig(StringGrid2);
 	ZeroFind(vecRawData, iNullFirst, iNullSecond, iNumCol, StrToInt(Edit1->Text));
 	double dSumSin = 0, dSumCos = 0;
 	int iPeriod = iNullSecond - iNullFirst;

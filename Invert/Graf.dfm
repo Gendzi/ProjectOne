@@ -1,7 +1,7 @@
 object Form3: TForm3
   Left = 0
   Top = 0
-  Caption = 'Form3'
+  Caption = #1043#1088#1072#1092#1080#1082#1080
   ClientHeight = 496
   ClientWidth = 686
   Color = clBtnFace
@@ -20,7 +20,7 @@ object Form3: TForm3
     Height = 217
     Legend.Visible = False
     Title.Text.Strings = (
-      'TChart')
+      #1043#1088#1072#1092#1080#1082' '#1082#1086#1101#1092#1092#1080#1094#1080#1077#1085#1090#1086#1074' '#1088#1103#1076#1072)
     View3D = False
     TabOrder = 0
     object Series1: TBarSeries
@@ -40,7 +40,7 @@ object Form3: TForm3
     Height = 250
     Legend.Visible = False
     Title.Text.Strings = (
-      'TChart')
+      #1043#1088#1072#1092#1080#1082' '#1074#1086#1089#1090#1072#1085#1086#1074#1083#1077#1085#1085#1086#1075#1086' '#1089#1080#1075#1085#1072#1083#1072)
     BottomAxis.Grid.ZPosition = 2.000000000000000000
     DepthAxis.Automatic = False
     DepthAxis.AutomaticMaximum = False

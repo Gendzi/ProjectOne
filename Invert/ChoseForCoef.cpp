@@ -3,23 +3,23 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "Unit1.h"
-#include "Unit2.h"
+#include "ChoseForCoef.h"
+#include "Main.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-TForm2 *Form2;
+TForm4 *Form4;
 //---------------------------------------------------------------------------
-__fastcall TForm2::TForm2(TComponent* Owner)
+__fastcall TForm4::TForm4(TComponent* Owner)
 	: TForm(Owner)
 {
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm2::Button1Click(TObject *Sender)
+void __fastcall TForm4::Button1Click(TObject *Sender)
 {
 	if (Form1->vecNameCol.size()==1)
 	{
-		Form1->sChoseColum = "1";
+		Form1->iNumCol = 0;
 		this->Close();
 	}
 	if (Edit1->Text=="")
@@ -32,7 +32,7 @@ void __fastcall TForm2::Button1Click(TObject *Sender)
 		MaxNum = Form1->vecNameCol.size();
 		if ((1 <= StrToInt(Edit1->Text)) && (StrToInt(Edit1->Text) <= MaxNum) )
 		{
-			Form1->sChoseColum = Edit1->Text;
+			Form1->iNumCol = StrToInt(Edit1->Text)-1;
 			this->Close();
 		}
 		else
@@ -44,4 +44,3 @@ void __fastcall TForm2::Button1Click(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-

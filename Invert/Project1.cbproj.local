@@ -6,5 +6,17 @@
     <Transaction>2012.12.04 11:33:28.693.dfm,C:\Users\1\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\1\Documents\RAD Studio\Projects\Invert\Unit1.dfm</Transaction>
     <Transaction>2012.12.04 11:33:36.288.cbproj,C:\Users\1\Documents\RAD Studio\Projects\Project1.cbproj=C:\Users\1\Documents\RAD Studio\Projects\Invert\Project1.cbproj</Transaction>
     <Transaction>2012.12.04 11:33:51.921.cbproj,C:\Users\1\Documents\RAD Studio\Projects\Invert\Project1.cbproj=C:\Users\1\Documents\RAD Studio\Projects\Invert\Project1.cbproj</Transaction>
+    <Transaction>2012.12.23 16:31:47.466.cpp,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit4.cpp=C:\Users\1\Documents\GitHub\ProjectOne\Invert\ChoseForCoef.cpp</Transaction>
+    <Transaction>2012.12.23 16:31:47.466.h,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit4.h=C:\Users\1\Documents\GitHub\ProjectOne\Invert\ChoseForCoef.h</Transaction>
+    <Transaction>2012.12.23 16:31:47.466.dfm,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit4.dfm=C:\Users\1\Documents\GitHub\ProjectOne\Invert\ChoseForCoef.dfm</Transaction>
+    <Transaction>2012.12.23 16:35:30.216.cpp,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit3.cpp=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Graf.cpp</Transaction>
+    <Transaction>2012.12.23 16:35:30.216.h,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit3.h=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Graf.h</Transaction>
+    <Transaction>2012.12.23 16:35:30.216.dfm,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit3.dfm=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Graf.dfm</Transaction>
+    <Transaction>2012.12.23 16:35:57.506.cpp,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit1.cpp=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Main.cpp</Transaction>
+    <Transaction>2012.12.23 16:35:57.506.h,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit1.h=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Main.h</Transaction>
+    <Transaction>2012.12.23 16:35:57.506.dfm,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit1.dfm=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Main.dfm</Transaction>
+    <Transaction>2012.12.23 16:37:20.166.cpp,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit2.cpp=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Invert.cpp</Transaction>
+    <Transaction>2012.12.23 16:37:20.166.h,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit2.h=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Invert.h</Transaction>
+    <Transaction>2012.12.23 16:37:20.166.dfm,C:\Users\1\Documents\GitHub\ProjectOne\Invert\Unit2.dfm=C:\Users\1\Documents\GitHub\ProjectOne\Invert\Invert.dfm</Transaction>
   </Transactions>
 </BorlandProject>
