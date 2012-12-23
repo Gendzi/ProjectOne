@@ -240,6 +240,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 	double dSumSin = 0, dSumCos = 0;
 	int iPeriod = iNullSecond - iNullFirst;
 	StringGrid2->RowCount = StrToInt(Edit2->Text)+1;
+	double TwoPiOnPer = 2*M_PI/iPeriod;                  // оптимизируем
 	for (int k = 1; k < StrToInt(Edit2->Text)+1; k++)
 	{
 		std::vector< double > vecTemp;
@@ -247,8 +248,8 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 		dSumCos = 0;
 		for(int n = iNullFirst; n < iNullSecond; n++)
 		{
-			dSumSin += StrToFloat(vecRawData[n][iNumCol]) * sin(2*M_PI*k*(n-iNullFirst)/iPeriod);
-			dSumCos += StrToFloat(vecRawData[n][iNumCol]) * cos(2*M_PI*k*(n-iNullFirst)/iPeriod);
+			dSumSin += StrToFloat(vecRawData[n][iNumCol]) * sin(TwoPiOnPer*k*(n-iNullFirst));
+			dSumCos += StrToFloat(vecRawData[n][iNumCol]) * cos(TwoPiOnPer*k*(n-iNullFirst));
 		}
 		vecTemp.push_back(k);
 		vecTemp.push_back(dSumSin*2/iPeriod);
