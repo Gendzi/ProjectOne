@@ -231,53 +231,51 @@ void __fastcall TForm1::Help1Click(TObject *Sender)
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-int iNumCol = 0;
-iNullFirst = 0;
-iNullSecond = 0;
-int arr[4][250];
-
-float dSumSin = 0, dSumCos = 0;
-float dPeriod = iNullSecond - iNullFirst;
-StringGrid2->RowCount = StrToInt(Edit2->Text);
-for (int k = 1; k < StrToInt(Edit2->Text); k++) {
-	dSumSin = 0;
-    dSumCos = 0;
+	ClearStrGrig(StringGrid2);
+	iNumCol = 0;
+	iNullFirst = 0;
+	iNullSecond = 0;
+	int arr[4][250];
+	ZeroFind(vecRawData, iNullFirst, iNullSecond, iNumCol, StrToInt(Edit1->Text));
+	double dSumSin = 0, dSumCos = 0;
+	int iPeriod = iNullSecond - iNullFirst;
+	StringGrid2->RowCount = StrToInt(Edit2->Text)+1;
+	for (int k = 1; k < StrToInt(Edit2->Text)+1; k++)
+	{
+		std::vector< double > vecTemp;
+		dSumSin = 0;
+		dSumCos = 0;
+		for(int n = iNullFirst; n < iNullSecond; n++)
+		{
+			dSumSin += StrToFloat(vecRawData[n][iNumCol]) * sin(2*M_PI*k*(n-iNullFirst)/iPeriod);
+			dSumCos += StrToFloat(vecRawData[n][iNumCol]) * cos(2*M_PI*k*(n-iNullFirst)/iPeriod);
+		}
+		vecTemp.push_back(k);
+		vecTemp.push_back(dSumSin*2/iPeriod);
+		vecTemp.push_back(dSumCos*2/iPeriod);
+		vecCoeff.push_back(vecTemp);
+		StringGrid2->Cells[0][k] = vecCoeff[k-1][0];
+		StringGrid2->Cells[1][k] = FormatFloat("0.########", vecCoeff[k-1][1]);
+		StringGrid2->Cells[2][k] = FormatFloat("0.########", vecCoeff[k-1][2]);
+	}
+	a0 = 0;
 	for(int n = iNullFirst; n < iNullSecond; n++)
 	{
-		dSumSin += StrToFloat(StringGrid1->Cells[0][n]) * sin(2*M_PI*k*(n-iNullFirst)/dPeriod);
-		dSumCos += StrToFloat(StringGrid1->Cells[0][n]) * cos(2*M_PI*k*(n-iNullFirst)/dPeriod);
+		a0 += StrToFloat(vecRawData[n][iNumCol]);
 	}
-	StringGrid2->Cells[0][k] = k;
-	StringGrid2->Cells[1][k] = FormatFloat("0.########", dSumSin*2/dPeriod);
-	StringGrid2->Cells[2][k] = FormatFloat("0.########", dSumCos*2/dPeriod);
-}
-double a0 = 0;
-for(int n = iNullFirst; n < iNullSecond; n++) {
-a0 += StrToFloat(StringGrid1->Cells[0][n]);
-}
-a0 = a0/dPeriod;
-StringGrid2->Cells[1][0] = "sin";
-StringGrid2->Cells[2][0] = "cos";
-StringGrid2->Cells[3][0] = "a0";
-StringGrid2->Cells[3][1] = FormatFloat("0.########",a0);
-
-
-/*
-for(int j = 0; j < StringGrid1->ColCount; j++)
-{
-for(int i = 0; i < StringGrid1->RowCount; i++)
-{
-	arr [j][i] = StrToFloat(StringGrid1->Cells[i][j]);
-}
-}*/
+	a0 = a0/iPeriod;
+	StringGrid2->Cells[1][0] = "sin";
+	StringGrid2->Cells[2][0] = "cos";
+	StringGrid2->Cells[3][0] = "a0";
+	StringGrid2->Cells[3][1] = FormatFloat("0.########",a0);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-TForm3 *Form3 = new TForm3(NULL);
-Form3->Position = poScreenCenter;
-Form3->Show();
+	TForm3 *Form3 = new TForm3(NULL);
+	Form3->Position = poScreenCenter;
+	Form3->Show();
 }
 //---------------------------------------------------------------------------
 
@@ -301,7 +299,7 @@ void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst,
 		Forw = vec[i+1][NumCol];
 		if (Pre * Forw < 0)
 		{
-			NullFirst = i+1;
+			NullFirst = i;
 			if (Pre > 0)
 			{
 				continue;
@@ -315,7 +313,7 @@ void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst,
 		Forw = vec[i+1][NumCol];
 		if (Pre * Forw < 0)
 		{
-			NullSecond = i+1;
+			NullSecond = i;
 			break;
 		}
 	}
