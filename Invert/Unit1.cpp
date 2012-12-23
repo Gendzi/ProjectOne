@@ -21,6 +21,7 @@
 using namespace std;
 
 void ClearStrGrig (TStringGrid *a);
+void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst, int& NullSecond, int NumCol ,int Range);
 
 TForm1 *Form1;
 
@@ -216,7 +217,8 @@ void __fastcall TForm1::Save1Click(TObject *Sender)
 				out.close();
 			}
 		else
-			MessageBox(Application->Handle, "Не удалось сохранить файл", "Error", MB_OK );
+			MessageBox(Application->Handle, "Не удалось сохранить файл",
+			"Error", MB_OK );
 	}
 }
 //---------------------------------------------------------------------------
@@ -229,38 +231,18 @@ void __fastcall TForm1::Help1Click(TObject *Sender)
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
+int iNumCol = 0;
 iNullFirst = 0;
-intNullFuncSecond = 0;
-float intNullFuncBuffPoz;
-float intNullFuncBuffNeg;
+iNullSecond = 0;
 int arr[4][250];
-for (int i = 1; i < StringGrid1->RowCount; i++) {
-intNullFuncBuffPoz = StrToFloat(StringGrid1->Cells[0][i]);
-intNullFuncBuffNeg = StrToFloat(StringGrid1->Cells[0][i+1]);
-if (intNullFuncBuffPoz * intNullFuncBuffNeg < 0) {
-iNullFirst = i+1;
-if (intNullFuncBuffNeg < 0) {
-continue;
-}
-break;
-}
-}
 
-for (int i = iNullFirst+StrToInt(Edit1->Text); i < StringGrid1->RowCount; i++) {
-intNullFuncBuffPoz = StrToFloat(StringGrid1->Cells[0][i]);
-intNullFuncBuffNeg = StrToFloat(StringGrid1->Cells[0][i+1]);
-if (intNullFuncBuffPoz * intNullFuncBuffNeg < 0) {
-intNullFuncSecond = i+1;
-break;
-}
-}
 float dSumSin = 0, dSumCos = 0;
-float dPeriod = intNullFuncSecond - iNullFirst;
+float dPeriod = iNullSecond - iNullFirst;
 StringGrid2->RowCount = StrToInt(Edit2->Text);
 for (int k = 1; k < StrToInt(Edit2->Text); k++) {
 	dSumSin = 0;
     dSumCos = 0;
-	for(int n = iNullFirst; n < intNullFuncSecond; n++)
+	for(int n = iNullFirst; n < iNullSecond; n++)
 	{
 		dSumSin += StrToFloat(StringGrid1->Cells[0][n]) * sin(2*M_PI*k*(n-iNullFirst)/dPeriod);
 		dSumCos += StrToFloat(StringGrid1->Cells[0][n]) * cos(2*M_PI*k*(n-iNullFirst)/dPeriod);
@@ -270,7 +252,7 @@ for (int k = 1; k < StrToInt(Edit2->Text); k++) {
 	StringGrid2->Cells[2][k] = FormatFloat("0.########", dSumCos*2/dPeriod);
 }
 double a0 = 0;
-for(int n = iNullFirst; n < intNullFuncSecond; n++) {
+for(int n = iNullFirst; n < iNullSecond; n++) {
 a0 += StrToFloat(StringGrid1->Cells[0][n]);
 }
 a0 = a0/dPeriod;
@@ -306,4 +288,35 @@ void ClearStrGrig (TStringGrid *a)
 		a->Cells[i][j] = "";
         a->ColCount = 4;
 		a->RowCount = 2;
+}
+
+void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst,
+	int& NullSecond, int NumCol ,int Range)
+{
+	double Pre = 0.0;
+	double Forw = 0.0;
+	for (int i = 0; i < vec.size(); i++)
+	{
+		Pre = vec[i][NumCol];
+		Forw = vec[i+1][NumCol];
+		if (Pre * Forw < 0)
+		{
+			NullFirst = i+1;
+			if (Pre > 0)
+			{
+				continue;
+			}
+			break;
+		}
+	}
+	for (int i = NullFirst + Range; i < vec.size(); i++)
+	{
+    	Pre = vec[i][NumCol];
+		Forw = vec[i+1][NumCol];
+		if (Pre * Forw < 0)
+		{
+			NullSecond = i+1;
+			break;
+		}
+	}
 }

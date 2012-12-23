@@ -48,7 +48,7 @@ std::vector< String > vecNameCol;
 std::vector< std::vector<double> > vecRawData;
 String sChoseColum;
 float iNullFirst;
-float intNullFuncSecond;
+float iNullSecond;
 	__fastcall TForm1(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
