@@ -312,7 +312,7 @@ void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst,
 	{
 		Pre = vec[i][NumCol];
 		Forw = vec[i+1][NumCol];
-		if (Pre * Forw < 0)
+		if (Pre * Forw <= 0)
 		{
 			NullFirst = i;
 			if (Pre > 0)
@@ -326,7 +326,7 @@ void ZeroFind (std::vector< std::vector<double> > vec, int& NullFirst,
 	{
     	Pre = vec[i][NumCol];
 		Forw = vec[i+1][NumCol];
-		if (Pre * Forw < 0)
+		if (Pre * Forw <= 0)
 		{
 			NullSecond = i;
 			break;
