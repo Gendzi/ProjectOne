@@ -288,7 +288,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-	TForm3 *Form3 = new TForm3(NULL);
+	TForm3 *Form3 = new TForm3(NULL);   //גûחמג פמנלû 3
 	Form3->Position = poScreenCenter;
 	Form3->Show();
 }
