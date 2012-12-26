@@ -17,7 +17,7 @@ __fastcall TForm2::TForm2(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm2::Button1Click(TObject *Sender)
 {
-	if (Form1->vecNameCol.size()==1)
+	if (Form1->vecNameCol.size()==1) // для одной колонки
 	{
 		Form1->sChoseColum = "1";
 		this->Close();
